@@ -366,6 +366,10 @@ int smi_mm_init(struct smi_device *smi)
 
 void smi_mm_fini(struct smi_device *smi)
 {
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,9,0)
+	struct drm_device *dev = smi->dev;
+#endif
+
 	if (!smi->mm_inited)
 		return;
  	ttm_bo_device_release(&smi->ttm.bdev);
@@ -373,7 +377,6 @@ void smi_mm_fini(struct smi_device *smi)
  	smi_ttm_global_release(smi);
 #endif
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4,9,0)
-	struct drm_device *dev = smi->dev;
 	arch_io_free_memtype_wc(pci_resource_start(dev->pdev, 0),
 				pci_resource_len(dev->pdev, 0));
 #endif
