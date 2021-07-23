@@ -1259,7 +1259,9 @@ long ddk768_edidHeaderReadMonitorEx(
 {
     unsigned char retry;//value,
     unsigned char edidBuffer[10];
+#ifndef READ_EDID_CONTINUOUS
     unsigned long offset;
+#endif    
 
     /* Initialize the i2c bus */
     ddk768_swI2CInit(sclGpio, sdaGpio);

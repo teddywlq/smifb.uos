@@ -243,8 +243,7 @@ void ddk768_swI2CStop(void)
 {
     /* Stop the I2C */
     ddk768_swI2CSCL(1);
-    swI2CWait();
-    //ddk768_swI2CSDA(0);
+    ddk768_swI2CSDA(0);
     ddk768_swI2CSDA(1);
 }
 
@@ -287,7 +286,7 @@ long ddk768_swI2CWriteByte(unsigned char data)
 
         /* Toggle clk line to one */
         ddk768_swI2CSCL(1);
-        swI2CWait();
+      
 
         /* Shift byte to be sent */
         value = value << 1;
@@ -300,17 +299,17 @@ long ddk768_swI2CWriteByte(unsigned char data)
     /* Set the SCL High for ack */
     swI2CWait();
     ddk768_swI2CSCL(1);
-    swI2CWait();
+
 
     /* Read SDA, until SDA==0 */
-    for(i=0; i<0xff; i++) 
+    for(i=0; i<0xf; i++) 
     {
         if (!swI2CReadSDA())
             break;
 
-        ddk768_swI2CSCL(0);
+
         swI2CWait();
-        ddk768_swI2CSCL(1);
+
         swI2CWait();
     }
 
@@ -318,7 +317,7 @@ long ddk768_swI2CWriteByte(unsigned char data)
     ddk768_swI2CSCL(0);
     ddk768_swI2CSDA(1);
 
-    if (i<0xff)
+    if (i<0xf)
         return 0;
     else
         return (-1);
