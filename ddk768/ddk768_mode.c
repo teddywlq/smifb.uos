@@ -905,7 +905,9 @@ pll_value_t *pPLL               /* Pre-calculated values for the PLL */
     
     hdmi_channel = FIELD_GET(peekRegisterDWord(DISPLAY_CTRL+offset),
                                    DISPLAY_CTRL,
-                                   HDMI_SELECT);    
+                                   HDMI_SELECT);
+	
+	ulTmpValue = peekRegisterDWord(DISPLAY_CTRL+offset);
 
     /* Set control register value */
     ulTmpValue =       

@@ -56,7 +56,7 @@
 #define SUPPORT_CHIP " \t\tSM750, SM768\n"
 
 
-#define _version_	"1.3.15.0"
+#define _version_	"1.3.16.0"
 
 #undef  NO_WC
 
