@@ -286,12 +286,13 @@ static int smi_vram_init(struct smi_device *cdev)
 	else
 		cdev->mc.vram_size = ddk768_getFrameBufSize();
 
+#if 0
 	if (!request_mem_region(cdev->mc.vram_base, cdev->mc.vram_size,
 				"smidrmfb_vram")) {
 		DRM_ERROR("can't reserve VRAM\n");
 		return -ENXIO;
 	}
-
+#endif
 	return 0;
 }
 
@@ -382,7 +383,7 @@ int smi_driver_load(struct drm_device *dev, unsigned long flags)
 		return -ENOMEM;
 	dev->dev_private = (void *)cdev;
 
-	pci_enable_device(dev->pdev);
+	r = pci_enable_device(dev->pdev);
 
 	r = smi_device_init(cdev, dev, dev->pdev, flags);
 	if (r) {
